@@ -149,20 +149,9 @@ public:
                 return RQ_NOTIFICATION_CONTINUE;
             }
 
-            if (pRawResponse->pEntityChunks->DataChunkType != HttpDataChunkFromMemory &&
-                pRawResponse->pEntityChunks->DataChunkType != HttpDataChunkFromFileHandle)
+            if (pRawResponse->pEntityChunks->DataChunkType != HttpDataChunkFromMemory)
             {
                 /* not supported */
-                OutputDebugStringA("Chunk not from memory or file");
-                return RQ_NOTIFICATION_CONTINUE;
-            }
-
-            if (pEntityChunk->DataChunkType == HttpDataChunkFromFileHandle &&
-                (pEntityChunk->FromFileHandle.ByteRange.StartingOffset.QuadPart > 0 ||
-                    pEntityChunk->FromFileHandle.ByteRange.Length.QuadPart > (250 * 1024 * 1024)))
-            {
-                /* not supported */
-                OutputDebugStringA("HttpDataChunkFromFileHandle too big");
                 return RQ_NOTIFICATION_CONTINUE;
             }
 
